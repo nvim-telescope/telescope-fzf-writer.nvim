@@ -14,6 +14,11 @@ More can be added later.
 - `require('telescope').extensions.fzf_writer.grep()`
 - similar to `live_grep`, but more async-ish
 
+`fzf_writer.staged_grep`
+- `require('telescope').extensions.fzf_writer.staged_grep()`
+- similar to `live_grep`, but more async-ish and bonus feature.
+- uses `rg` to filter exact match before `|` and afterwards uses `fzf` to fuzzy find over results.
+
 `fzf_writer.files`
 - `require('telescope').extensions.fzf_writer.files()`
 - similar to `find_files`, but more async-ish

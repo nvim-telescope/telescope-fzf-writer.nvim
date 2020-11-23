@@ -68,6 +68,49 @@ return require('telescope').register_extension {
       }):find()
     end,
 
+    staged_grep = function(opts)
+      opts = opts or {}
+
+      local live_grepper = finders._new {
+        fn_command = function(_, prompt)
+          if #prompt < minimum_grep_characters then
+            return nil
+          end
+
+          local rg_prompt, fzf_prompt
+          if string.find(prompt, "|") then
+            rg_prompt  = string.sub(prompt, 1, string.find(prompt, "|") - 1)
+            fzf_prompt = string.sub(prompt, string.find(prompt, "|") + 1, #prompt)
+          else
+            rg_prompt = prompt
+            fzf_prompt = ""
+          end
+          print("fzf_prompt:", fzf_prompt)
+
+          local rg_args = flatten { conf.vimgrep_arguments, rg_prompt, "." }
+          table.remove(rg_args, 1)
+
+          return {
+            writer = Job:new {
+              command = 'rg',
+              args = rg_args,
+            },
+
+            command = 'fzf',
+            args = {'--filter', fzf_prompt},
+          }
+        end,
+
+        entry_maker = make_entry.gen_from_vimgrep(opts),
+      }
+
+      pickers.new(opts, {
+        prompt_title = 'Fzf Writer: Grep',
+        finder = live_grepper,
+        previewer = previewers.vimgrep.new(opts),
+        sorter = use_highlighter and sorters.highlighter_only(opts),
+      }):find()
+    end,
 
     files = function(opts)
       opts = opts or {}
