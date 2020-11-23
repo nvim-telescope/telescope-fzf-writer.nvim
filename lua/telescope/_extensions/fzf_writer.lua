@@ -61,7 +61,7 @@ return require('telescope').register_extension {
       }
 
       pickers.new(opts, {
-        prompt_title = 'Live Grep',
+        prompt_title = 'Fzf Writer: Grep',
         finder = live_grepper,
         previewer = previewers.vimgrep.new(opts),
         sorter = use_highlighter and sorters.highlighter_only(opts),
@@ -94,7 +94,7 @@ return require('telescope').register_extension {
       }
 
       pickers.new(opts, {
-        prompt_title = 'Live Grep',
+        prompt_title = 'Fzf Writer: Files',
         finder = live_grepper,
         previewer = previewers.vimgrep.new(opts),
         sorter = use_highlighter and sorters.highlighter_only(opts),
