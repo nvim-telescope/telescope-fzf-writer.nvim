@@ -80,9 +80,9 @@ return require('telescope').register_extension {
           end
 
           local rg_prompt, fzf_prompt
-          if string.find(prompt, fzf_separator) then
-            rg_prompt  = string.sub(prompt, 1, string.find(prompt, fzf_separator) - 1)
-            fzf_prompt = string.sub(prompt, string.find(prompt, fzf_separator) + 1, #prompt)
+          if string.find(prompt, fzf_separator, 1, true) then
+            rg_prompt  = string.sub(prompt, 1, string.find(prompt, fzf_separator, 1, true) - 1)
+            fzf_prompt = string.sub(prompt, string.find(prompt, fzf_separator, 1, true) + #fzf_separator, #prompt)
           else
             rg_prompt = prompt
             fzf_prompt = ""
