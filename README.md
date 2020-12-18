@@ -18,6 +18,8 @@ More can be added later.
 - `require('telescope').extensions.fzf_writer.staged_grep()`
 - similar to `live_grep`, but more async-ish and bonus feature.
 - uses `rg` to filter exact match before `|` and afterwards uses `fzf` to fuzzy find over results.
+- If you wish to configure this, it has configuration for:
+    - `fzf_separator`: default "|", the character to split between rg mode and fzf mode.
 
 `fzf_writer.files`
 - `require('telescope').extensions.fzf_writer.files()`

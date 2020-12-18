@@ -15,17 +15,17 @@ local minimum_files_characters = 0
 local use_highlighter = false
 
 return require('telescope').register_extension {
-  setup = function(conf)
-    if conf.minimum_grep_characters then
-      minimum_grep_characters = conf.minimum_grep_characters
+  setup = function(user_conf)
+    if user_conf.minimum_grep_characters then
+      minimum_grep_characters = user_conf.minimum_grep_characters
     end
 
-    if conf.minimum_files_characters then
-      minimum_files_characters = conf.minimum_files_characters
+    if user_conf.minimum_files_characters then
+      minimum_files_characters = user_conf.minimum_files_characters
     end
 
-    if conf.use_highlighter ~= nil then
-      use_highlighter = conf.use_highlighter
+    if user_conf.use_highlighter ~= nil then
+      use_highlighter = user_conf.use_highlighter
     end
   end,
 
@@ -71,6 +71,8 @@ return require('telescope').register_extension {
     staged_grep = function(opts)
       opts = opts or {}
 
+      local fzf_separator = opts.fzf_separator or "|"
+
       local live_grepper = finders._new {
         fn_command = function(_, prompt)
           if #prompt < minimum_grep_characters then
@@ -78,14 +80,13 @@ return require('telescope').register_extension {
           end
 
           local rg_prompt, fzf_prompt
-          if string.find(prompt, "|") then
-            rg_prompt  = string.sub(prompt, 1, string.find(prompt, "|") - 1)
-            fzf_prompt = string.sub(prompt, string.find(prompt, "|") + 1, #prompt)
+          if string.find(prompt, fzf_separator) then
+            rg_prompt  = string.sub(prompt, 1, string.find(prompt, fzf_separator) - 1)
+            fzf_prompt = string.sub(prompt, string.find(prompt, fzf_separator) + 1, #prompt)
           else
             rg_prompt = prompt
             fzf_prompt = ""
           end
-          print("fzf_prompt:", fzf_prompt)
 
           local rg_args = flatten { conf.vimgrep_arguments, rg_prompt, "." }
           table.remove(rg_args, 1)
