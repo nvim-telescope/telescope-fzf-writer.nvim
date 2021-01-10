@@ -4,7 +4,6 @@ local conf = require('telescope.config').values
 local finders = require('telescope.finders')
 local make_entry = require('telescope.make_entry')
 local pickers = require('telescope.pickers')
-local previewers = require('telescope.previewers')
 local sorters = require('telescope.sorters')
 
 local flatten = vim.tbl_flatten
@@ -63,7 +62,7 @@ return require('telescope').register_extension {
       pickers.new(opts, {
         prompt_title = 'Fzf Writer: Grep',
         finder = live_grepper,
-        previewer = previewers.vimgrep.new(opts),
+        previewer = conf.grep_previewer(opts),
         sorter = use_highlighter and sorters.highlighter_only(opts),
       }):find()
     end,
@@ -108,7 +107,7 @@ return require('telescope').register_extension {
       pickers.new(opts, {
         prompt_title = 'Fzf Writer: Grep',
         finder = live_grepper,
-        previewer = previewers.vimgrep.new(opts),
+        previewer = conf.grep_previewer(opts),
         sorter = use_highlighter and sorters.highlighter_only(opts),
       }):find()
     end,
@@ -140,7 +139,7 @@ return require('telescope').register_extension {
       pickers.new(opts, {
         prompt_title = 'Fzf Writer: Files',
         finder = live_grepper,
-        previewer = previewers.vimgrep.new(opts),
+        previewer = conf.grep_previewer(opts),
         sorter = use_highlighter and sorters.highlighter_only(opts),
       }):find()
     end,
