@@ -32,7 +32,7 @@ return require('telescope').register_extension {
   exports = {
     grep = function(opts)
       opts = opts or {}
-      opts.cwd = utils.get_lazy_default(opts.cwd, vim.fn.getcwd)
+      opts.cwd = utils.get_lazy_default(opts.cwd, vim.loop.cwd)
 
       local live_grepper = finders._new {
         fn_command = function(_, prompt)
@@ -72,7 +72,7 @@ return require('telescope').register_extension {
 
     staged_grep = function(opts)
       opts = opts or {}
-      opts.cwd = utils.get_lazy_default(opts.cwd, vim.fn.getcwd)
+      opts.cwd = utils.get_lazy_default(opts.cwd, vim.loop.cwd)
 
       local fzf_separator = opts.fzf_separator or "|"
 
@@ -119,7 +119,7 @@ return require('telescope').register_extension {
 
     files = function(opts)
       opts = opts or {}
-      opts.cwd = utils.get_lazy_default(opts.cwd, vim.fn.getcwd)
+      opts.cwd = utils.get_lazy_default(opts.cwd, vim.loop.cwd)
 
       local _ = make_entry.gen_from_vimgrep(opts)
       local live_grepper = finders._new {
