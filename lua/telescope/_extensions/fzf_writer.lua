@@ -5,6 +5,7 @@ local finders = require('telescope.finders')
 local make_entry = require('telescope.make_entry')
 local pickers = require('telescope.pickers')
 local sorters = require('telescope.sorters')
+local utils = require('telescope.utils')
 
 local flatten = vim.tbl_flatten
 
@@ -31,6 +32,7 @@ return require('telescope').register_extension {
   exports = {
     grep = function(opts)
       opts = opts or {}
+      opts.cwd = utils.get_lazy_default(opts.cwd, vim.loop.cwd)
 
       local live_grepper = finders._new {
         fn_command = function(_, prompt)
@@ -49,6 +51,7 @@ return require('telescope').register_extension {
             writer = Job:new {
               command = 'rg',
               args = rg_args,
+              cwd = opts.cwd,
             },
 
             command = 'fzf',
@@ -69,6 +72,7 @@ return require('telescope').register_extension {
 
     staged_grep = function(opts)
       opts = opts or {}
+      opts.cwd = utils.get_lazy_default(opts.cwd, vim.loop.cwd)
 
       local fzf_separator = opts.fzf_separator or "|"
 
@@ -94,6 +98,7 @@ return require('telescope').register_extension {
             writer = Job:new {
               command = 'rg',
               args = rg_args,
+              cwd = opts.cwd,
             },
 
             command = 'fzf',
@@ -114,6 +119,7 @@ return require('telescope').register_extension {
 
     files = function(opts)
       opts = opts or {}
+      opts.cwd = utils.get_lazy_default(opts.cwd, vim.loop.cwd)
 
       local _ = make_entry.gen_from_vimgrep(opts)
       local live_grepper = finders._new {
@@ -126,6 +132,7 @@ return require('telescope').register_extension {
             writer = Job:new {
               command = 'rg',
               args = {"--files"},
+              cwd = opts.cwd,
             },
 
             command = 'fzf',
