@@ -11,7 +11,7 @@ local flatten = vim.tbl_flatten
 local minimum_grep_characters = 2
 local minimum_files_characters = 0
 
-local use_highlighter = false
+local use_highlighter = true
 
 return require('telescope').register_extension {
   setup = function(user_conf)
@@ -63,7 +63,7 @@ return require('telescope').register_extension {
         prompt_title = 'Fzf Writer: Grep',
         finder = live_grepper,
         previewer = conf.grep_previewer(opts),
-        sorter = use_highlighter and sorters.highlighter_only(opts),
+        sorter = use_highlighter and sorters.highlighter_only(opts) or nil,
       }):find()
     end,
 
@@ -108,7 +108,7 @@ return require('telescope').register_extension {
         prompt_title = 'Fzf Writer: Grep',
         finder = live_grepper,
         previewer = conf.grep_previewer(opts),
-        sorter = use_highlighter and sorters.highlighter_only(opts),
+        sorter = use_highlighter and sorters.highlighter_only(opts) or nil,
       }):find()
     end,
 
@@ -140,7 +140,7 @@ return require('telescope').register_extension {
         prompt_title = 'Fzf Writer: Files',
         finder = live_grepper,
         previewer = conf.grep_previewer(opts),
-        sorter = use_highlighter and sorters.highlighter_only(opts),
+        sorter = use_highlighter and sorters.highlighter_only(opts) or nil ,
       }):find()
     end,
   },
