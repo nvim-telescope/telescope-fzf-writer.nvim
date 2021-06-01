@@ -42,7 +42,7 @@ return require('telescope').register_extension {
             return nil
           end
 
-          local rg_args = flatten { conf.vimgrep_arguments, "." }
+          local rg_args = flatten { conf.vimgrep_arguments, prompt, "." }
           table.remove(rg_args, 1)
 
           return {
